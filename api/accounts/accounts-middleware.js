@@ -41,10 +41,9 @@ exports.checkAccountNameUnique = (req, res, next) => {
 exports.checkAccountId = (req, res, next) => {
   // DO YOUR MAGIC
   const id = req.params.id
-  dbFunctions.getById(id).then(arr => {
-    const foundAccount = arr[0]
-    if(foundAccount){
-      req.foundAccount = foundAccount
+  dbFunctions.getById(id).then(acc => {
+    if(acc){
+      req.foundAccount = acc
       next()
     }else{
       res.status(404).send({message: "account not found"})
