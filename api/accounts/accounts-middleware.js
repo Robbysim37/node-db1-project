@@ -5,9 +5,13 @@ exports.checkAccountPayload = (req, res, next) => {
   // Note: you can either write "manual" validation logic
   // or use the Yup library (not currently installed)
 
+ 
+
   const {name,budget} = req.body
 
-  if(name === undefined || budget === undefined){
+  if(name === undefined){
+    res.status(400).send({ message: "name and budget are required" })
+  } else if(budget === undefined){
     res.status(400).send({ message: "name and budget are required" })
   } else if(name.trim().length < 3 || name.trim().length > 100){
     res.status(400).send({ message: "name of account must be between 3 and 100" })
@@ -15,26 +19,11 @@ exports.checkAccountPayload = (req, res, next) => {
     res.status(400).send({ message: "budget of account must be a number" })
   } else if(budget < 0 || budget > 1000000){
     res.status(400).send({ message: "budget of account is too large or too small" })
+  }else{
+    next()  
   }
-  req.validAccount = {name:name.trim(),budget:budget}
-  next()
 
-  // if(!parseInt(req.body.budget)){
-  //   res.status(400).send({ message: "budget of account must be a number" })
-  // }
-
-  // if(!req.body.name || !req.body.budget){
-  //     res.status(400).send({ message: "name and budget are required" })
-  // }
-
-  // if(req.body.name.trim() < 3 || req.body.name.trim() > 100){
-  //   res.status(400).send({ message: "name of account must be between 3 and 100" })
-  // }
-
-  // if(validatedRequest.budget < 0 || validatedRequest.budget > 1000000){
-  //   res.status(400).send({ message: "budget of account is too large or too small" })
-  // }
-  // next()
+  
 }
 
 exports.checkAccountNameUnique = (req, res, next) => {

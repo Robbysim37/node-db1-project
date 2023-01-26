@@ -18,21 +18,21 @@ router.get('/:id', checkAccountId, (req, res, next) => {
   res.status(200).send(req.foundAccount)
 })
 
-router.post('/', checkAccountNameUnique,checkAccountPayload, (req, res, next) => {
+router.post('/', checkAccountPayload,checkAccountNameUnique, (req, res, next) => {
   // DO YOUR MAGIC
-  const validAccount = req.validAccount
+  const validAccount = {...req.body,name:req.body.name.trim()}
   dbFunctions.create(validAccount).then( arr => {
-    const createdAccountid = arr[0]
-    res.status(201).send({...validAccount,createdAccountid})
+    res.status(201).json(validAccount)
   })
 })
 
 router.put('/:id', checkAccountId, checkAccountPayload, (req, res, next) => {
   // DO YOUR MAGIC
   const id = req.params.id
-  const validAccount = req.validAccount
+  const validAccount = {...req.body,name:req.body.name.trim()}
+  console.log(`${id} is the id, and ${validAccount} is the obj` )
   dbFunctions.updateById(id,validAccount).then( arr => {
-    res.status(200).send(req.body)
+    res.status(200).send(validAccount)
   })
 });
 
