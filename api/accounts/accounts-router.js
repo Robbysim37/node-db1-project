@@ -20,7 +20,7 @@ router.get('/:id', checkAccountId, (req, res, next) => {
 
 router.post('/', checkAccountPayload,checkAccountNameUnique, (req, res, next) => {
   // DO YOUR MAGIC
-  const validAccount = {name:req.body.name.trim,budget:req.body.budget}
+  const validAccount = {name:req.body.name.trim(),budget:req.body.budget}
   dbFunctions.create(validAccount).then(acc => {
     res.status(201).json(acc)
   })
@@ -30,9 +30,9 @@ router.put('/:id', checkAccountId, checkAccountPayload,(req, res, next) => {
   // DO YOUR MAGIC
   const id = req.params.id
   const validAccount = {...req.body,name:req.body.name.trim()}
-  console.log(`${id} is the id, and ${validAccount} is the obj` )
-  dbFunctions.updateById(id,validAccount).then( arr => {
-    res.status(200).send(validAccount)
+  console.log(`${id} is the id, and ${validAccount.name + " " +validAccount.budget} is the obj` )
+  dbFunctions.updateById(id,validAccount).then( acc => {
+    res.status(200).send(acc)
   })
 });
 

@@ -5,8 +5,6 @@ exports.checkAccountPayload = (req, res, next) => {
   // Note: you can either write "manual" validation logic
   // or use the Yup library (not currently installed)
 
- 
-
   const {name,budget} = req.body
 
   if(name === undefined){
@@ -20,10 +18,8 @@ exports.checkAccountPayload = (req, res, next) => {
   } else if(budget < 0 || budget > 1000000){
     res.status(400).send({ message: "budget of account is too large or too small" })
   }else{
-    next()  
+    next()
   }
-
-  
 }
 
 exports.checkAccountNameUnique = (req, res, next) => {
