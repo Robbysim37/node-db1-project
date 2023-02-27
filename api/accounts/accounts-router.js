@@ -32,7 +32,7 @@ router.put('/:id', checkAccountId, checkAccountPayload,(req, res, next) => {
   const validAccount = {...req.body,name:req.body.name.trim()}
   console.log(`${id} is the id, and ${validAccount.name + " " +validAccount.budget} is the obj` )
   dbFunctions.updateById(id,validAccount).then( acc => {
-    res.status(200).send(acc)
+    res.status(200).send(req.body)
   })
 });
 

@@ -28,6 +28,7 @@ exports.checkAccountNameUnique = (req, res, next) => {
     for(i = 0;i < arr.length ;i++){
       if(req.body.name === arr[i].name){
         res.status(400).send({ message: "that name is taken" })
+        return
       }
     }
     next()
